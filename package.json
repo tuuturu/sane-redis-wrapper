@@ -1,0 +1,30 @@
+{
+  "name": "@tuuturu/sane-redis-wrapper",
+  "version": "0.0.1",
+  "description": "Handles object storage in redis in a sane matter",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "rollup -c rollup.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuuturu/sane-redis-wrapper.git"
+  },
+  "keywords": [
+    "redis"
+  ],
+  "author": "Julius Pedersen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tuuturu/sane-redis-wrapper/issues"
+  },
+  "homepage": "https://github.com/tuuturu/sane-redis-wrapper#readme",
+  "dependencies": {
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "jest": "^25.2.6",
+    "rollup": "^2.3.2"
+  }
+}
