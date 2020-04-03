@@ -1,6 +1,6 @@
 {
   "name": "@tuuturu/sane-redis-wrapper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Handles object storage in redis in a sane matter",
   "main": "index.js",
   "scripts": {
