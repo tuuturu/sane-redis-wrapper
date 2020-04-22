@@ -109,4 +109,34 @@ describe('SaneRedisClient', () => {
 		finished_redis.push(redisID)
 		done()
 	})
+
+	it('overwrites the existing object when faced with existing keys', async done => {
+		const { id: redisID, port } = await startRedis()
+
+		const client = new SaneRedisClient()
+		await client.connect(`redis://localhost:${port}`)
+
+		const person = { name: 'testname', age: "30" }
+		const person_with_change1 = { ...person, phone: '815 493 00' }
+		const person_with_change2 = { ...person_with_change1, email: 'horse@cat.dog' }
+		const person_id = 'uuid'
+
+		const personRepository = client.createCollectionRepository('person')
+		await personRepository.set(person_id, person)
+
+		const result1 = await personRepository.getAll()
+		expect(result1).toStrictEqual([{ ...person }])
+
+		await personRepository.set(person_id, person_with_change1)
+		const result2 = await personRepository.getAll()
+		expect(result2).toStrictEqual([{ ...person_with_change1 }])
+
+		await personRepository.set(person_id, person_with_change2)
+		const result3 = await personRepository.getAll()
+		expect(result3).toStrictEqual([{ ...person_with_change2 }])
+
+		await client.disconnect()
+		finished_redis.push(redisID)
+		done()
+	})
 })

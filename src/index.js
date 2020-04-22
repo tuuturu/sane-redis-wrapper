@@ -76,12 +76,16 @@ function set(client, prefix, key, obj) {
 			if (key && value) destructed.push(key, value)
 
 		client.hmset(true_key, ...destructed, (error, value) => {
-			if (error) reject(error)
-			if (!value) reject()
+			if (error) return reject(error)
+			if (!value) return reject()
 
-			appendToCollection(client, prefix, key)
-				.then(() => resolve(value))
-				.catch(error => reject(error))
+			removeFromCollection(client, prefix, key)
+				.catch(() => {}) // Expected on new value
+				.finally(() => {
+					appendToCollection(client, prefix, key)
+						.then(() => resolve(value))
+						.catch(error => reject(error))
+				})
 		})
 	})
 }
